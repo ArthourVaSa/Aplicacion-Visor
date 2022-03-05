@@ -4,7 +4,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 from sqlalchemy import DateTime, Integer, String
 
-engines = create_engine('sqlite:///D:/Arthour/Trabajos/Nexuzz/Archivos/archivos/database/archivosdb.db')
+engines = create_engine('sqlite:///D:/Arthour/Trabajos/Nexuzz/Archivos/archivos/src/database/archivosdb.db')
 
 Session = sessionmaker(engines)
 session = Session()

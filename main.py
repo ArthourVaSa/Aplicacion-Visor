@@ -5,30 +5,19 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-sys.path.append("..")
+from src.inicio_sesion import *
 
-from archivos.widgets.archivos import VisorDatos
+class App(QApplication):
 
-class MainApp(QMainWindow):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, sys_argv):
+        super(App, self).__init__(sys_argv)
 
-        self.setFixedSize(1340,720)
-        self.setWindowTitle("Primera App")
-        
-        self.layout_general = QHBoxLayout()
-        self.widget_general = QWidget(self)
-        self.widget_general.setGeometry(0,0,300,720)
-        
-        self.widget_buscador = QWidget(self)
-        self.vista = VisorDatos()
-        self.widget_buscador.setLayout(self.vista.layout_total)
-        
-        self.layout_general.addWidget(self.widget_buscador)
-        self.widget_general.setLayout(self.layout_general)
+        #conectando todo
+        self.dlgInicioSesionVista = QDialog()
+        self.ui = Ui_dlgInicioSesionVista()
+        self.ui.setupUi(self.dlgInicioSesionVista)
+        self.dlgInicioSesionVista.show()
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = MainApp()
-    window.show()
+    app = App(sys.argv)
     sys.exit(app.exec_())

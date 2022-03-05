@@ -7,7 +7,7 @@ from PyQt5.QtGui import *
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-        uic.loadUi("vistas/VistaMain.ui", self)
+        uic.loadUi("src/vistas/VistaMain.ui", self)
 
         self.modelo = QFileSystemModel()
         self.modelo.setRootPath('')

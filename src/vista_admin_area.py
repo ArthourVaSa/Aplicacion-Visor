@@ -13,14 +13,14 @@ class VistaAdminArea(QDialog):
 
     def __init__(self):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminArea.ui",self)
+        uic.loadUi("src/vistas/VistaAdminArea.ui",self)
 
         self.setWindowTitle("Administrador")
 
         #agregar area
         self.pushButton_agregar_area.clicked.connect(self.go_to_add_area)
 
-    def add_area(self):
+    def go_to_add_area(self):
         pass
 
                

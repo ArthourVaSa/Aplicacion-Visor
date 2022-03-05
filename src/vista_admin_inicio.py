@@ -12,7 +12,7 @@ import time
 class VistaAdminInicio(QDialog):
     def __init__(self):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminInicio.ui",self)
+        uic.loadUi("src/vistas/VistaAdminInicio.ui",self)
 
         self.setWindowTitle("Inicio Administrador")
 

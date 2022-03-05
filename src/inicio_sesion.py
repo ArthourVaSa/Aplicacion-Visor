@@ -10,10 +10,10 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-from vista_super_inicio import *
+from src.vista_super_inicio import VistaSuperInicio
 
-from database import db
-from database.modelos import *
+from src.database import db
+from src.database.modelos import *
 
 import time
 
@@ -124,7 +124,7 @@ class Ui_dlgInicioSesionVista(object):
         self.pbAceptar.setObjectName("pbAceptar")
         # self.pbAceptar.setAutoDefault(False)
         # self.pbAceptar.setDefault(False)
-        self.pbAceptar.clicked.connect(self.proceso_aceptar)
+        self.pbAceptar.clicked.connect(lambda: self.proceso_aceptar(dlgInicioSesionVista))
 
         # Definimos el botón cancelar par luego atribuirle su tamña y posición.
         # Luego definimos el icono de la imagen y finalmente le damos el nombre del objeto
@@ -160,11 +160,11 @@ class Ui_dlgInicioSesionVista(object):
             print("Foco a aceptar")
             self.pbAceptar.setFocus()
 
-    def proceso_aceptar(self):
+    def proceso_aceptar(self, dlgInicioSesionVista):
         if (self.pbAceptar.hasFocus()):
-            self.validar_datos()
+            self.validar_datos(dlgInicioSesionVista)
     
-    def validar_datos(self):
+    def validar_datos(self, dlgInicioSesionVista):
         mensaje = ""
 
         if (len(self.leUsuario.text())==0):
@@ -193,12 +193,12 @@ class Ui_dlgInicioSesionVista(object):
             nombre_rol = db.session.query(Rol.rol_nombre).filter(Rol.id == rol[0]).first()
             
             if(nombre_rol[0] == "SuperUsuario"):
-                self.go_to_super_inicio()
+                self.go_to_super_inicio(dlgInicioSesionVista)
             
 
             return True
 
-    def go_to_super_inicio(self):
+    def go_to_super_inicio(self,dlgInicioSesionVista):
         # QtWidgets.QDialog.__init__(QtWidgets.QDialog)
         self.ir_super_inicio = VistaSuperInicio()
         self.ir_super_inicio.__init__()
