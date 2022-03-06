@@ -114,6 +114,19 @@ def main():
     #Confirmo los datos
     db.session.commit()
 
+    #creo el area
+    area1 = Area('Logística-Nexuss',empresa1.id)
+    area2 = Area('Contabilidad-Nexuss',empresa1.id)
+
+    #subo los datos a la bd
+    db.session.add(area1) 
+    db.session.add(area2)
+
+    #confirmo datos subidos
+    db.session.commit()
+
+    tipodocumental1 = TipoDoc('factura',)
+
 if __name__ == '__main__':
     db.Base.metadata.drop_all(db.engines)
     db.Base.metadata.create_all(db.engines)
