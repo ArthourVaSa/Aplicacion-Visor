@@ -1,3 +1,5 @@
+import os
+
 from modelos import *
 
 from db import *
@@ -125,7 +127,11 @@ def main():
     #confirmo datos subidos
     db.session.commit()
 
-    tipodocumental1 = TipoDoc('factura',)
+    archivo = os.path.basename("D:/Arthour/Trabajos/Nexuzz/Archivos/archivos/src/database/CV.pdf")
+    tipodocumental1 = TipoDoc('factura',archivo,1)
+
+    db.session.add(tipodocumental1)
+    db.session.commit()
 
 if __name__ == '__main__':
     db.Base.metadata.drop_all(db.engines)

@@ -143,7 +143,7 @@ class TipoDoc(db.Base):
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
     tipo_doc = Column(String(50), nullable=False)
-    archivo = Column(BINARY, nullable=False, unique=True)
+    archivo = Column(String(50), nullable=False, unique=True)
     id_indice_busqueda = Column(Integer(), ForeignKey('indicebusqueda.id'))
     usuario = relationship('User',backref='tipodocumental')
 
