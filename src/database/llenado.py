@@ -133,6 +133,20 @@ def main():
     db.session.add(tipodocumental1)
     db.session.commit()
 
+    area1.tipodoc += [tipodocumental1]
+
+    db.session.commit()
+
+    mapa_indice = {
+        "ruc":"",
+        "fecha":"",
+        "monto":"",
+        "sede":""
+    }
+    indice1 = IndiceBusqueda(archivo,str(mapa_indice))
+    db.session.add(indice1)
+    db.session.commit()
+
 if __name__ == '__main__':
     db.Base.metadata.drop_all(db.engines)
     db.Base.metadata.create_all(db.engines)

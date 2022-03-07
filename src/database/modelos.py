@@ -2,8 +2,8 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 from datetime import datetime
 
-# from src.database import db
-import db
+from database import db
+# import db
 
 class User(db.Base):
     __tablename__ = 'users'
@@ -126,6 +126,10 @@ class Area(db.Base):
     id = Column(Integer(), primary_key=True, autoincrement=True)
     nombre_area = Column(String(50), nullable=False, unique=True)
     id_empresa = Column(Integer(), ForeignKey('empresa.id'))
+    tipodoc = relationship('TipoDoc',
+                      secondary=area_tipodoc,
+                      back_populates='areas'
+    )
     usuario = relationship('User',backref='area')
 
     def __init__(self, nombre_area, id_empresa):
@@ -144,6 +148,10 @@ class TipoDoc(db.Base):
     id = Column(Integer(), primary_key=True, autoincrement=True)
     tipo_doc = Column(String(50), nullable=False)
     archivo = Column(String(50), nullable=False, unique=True)
+    areas = relationship('Area',
+                      secondary=area_tipodoc,
+                      back_populates='tipodoc'
+    )
     id_indice_busqueda = Column(Integer(), ForeignKey('indicebusqueda.id'))
     usuario = relationship('User',backref='tipodocumental')
 
