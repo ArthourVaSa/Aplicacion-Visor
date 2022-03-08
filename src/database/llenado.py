@@ -1,3 +1,5 @@
+import os
+
 from modelos import *
 
 from db import *
@@ -112,6 +114,37 @@ def main():
     db.session.add(usuario1)
 
     #Confirmo los datos
+    db.session.commit()
+
+    #creo el area
+    area1 = Area('Logística-Nexuss',empresa1.id)
+    area2 = Area('Contabilidad-Nexuss',empresa1.id)
+
+    #subo los datos a la bd
+    db.session.add(area1) 
+    db.session.add(area2)
+
+    #confirmo datos subidos
+    db.session.commit()
+
+    archivo = os.path.basename("D:/Arthour/Trabajos/Nexuzz/Archivos/archivos/src/database/CV.pdf")
+    tipodocumental1 = TipoDoc('factura',archivo,1)
+
+    db.session.add(tipodocumental1)
+    db.session.commit()
+
+    area1.tipodoc += [tipodocumental1]
+
+    db.session.commit()
+
+    mapa_indice = {
+        "ruc":"",
+        "fecha":"",
+        "monto":"",
+        "sede":""
+    }
+    indice1 = IndiceBusqueda(archivo,str(mapa_indice))
+    db.session.add(indice1)
     db.session.commit()
 
 if __name__ == '__main__':

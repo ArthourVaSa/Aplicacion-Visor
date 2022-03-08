@@ -2,7 +2,8 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 from datetime import datetime
 
-from src.database import db
+from database import db
+# import db
 
 class User(db.Base):
     __tablename__ = 'users'
@@ -100,8 +101,8 @@ class Empresa(db.Base):
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
     nombre_empresa = Column(String(50), nullable=False, unique=True)
-    id_area = Column(Integer(), ForeignKey('area.id'))
     usuario = relationship('User',backref='empresa')
+    area = relationship('Area',backref='empresa')
 
     def __init__(self, empresa_nombre):
         self.nombre_empresa = empresa_nombre
@@ -124,14 +125,19 @@ class Area(db.Base):
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
     nombre_area = Column(String(50), nullable=False, unique=True)
-    empresa = relationship('Empresa',backref='area')
+    id_empresa = Column(Integer(), ForeignKey('empresa.id'))
+    tipodoc = relationship('TipoDoc',
+                      secondary=area_tipodoc,
+                      back_populates='areas'
+    )
     usuario = relationship('User',backref='area')
 
-    def __init__(self, nombre_area):
+    def __init__(self, nombre_area, id_empresa):
         self.nombre_area = nombre_area
+        self.id_empresa = id_empresa
     
     def __repr__(self):
-        return f'Area((self.nombre_area))'
+        return f'Area((self.nombre_area),(self.id_empresa))'
 
     def __str__(self):
         return self.nombre_area
@@ -141,15 +147,21 @@ class TipoDoc(db.Base):
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
     tipo_doc = Column(String(50), nullable=False)
-    archivo = Column(BINARY, nullable=False, unique=True)
+    archivo = Column(String(50), nullable=False, unique=True)
+    areas = relationship('Area',
+                      secondary=area_tipodoc,
+                      back_populates='tipodoc'
+    )
     id_indice_busqueda = Column(Integer(), ForeignKey('indicebusqueda.id'))
     usuario = relationship('User',backref='tipodocumental')
 
-    def __init__(self, tipo_doc):
+    def __init__(self, tipo_doc, archivo, id_indice_busqueda):
         self.tipo_doc = tipo_doc
+        self.archivo = archivo
+        self.id_indice_busqueda = id_indice_busqueda
 
     def __repr__(self):
-        return f'TipoDoc((self.tipo_doc))'
+        return f'TipoDoc((self.tipo_doc),(self.archivo),(self.id_indice_busqueda))'
 
     def __str__(self):
         return self.tipo_doc
