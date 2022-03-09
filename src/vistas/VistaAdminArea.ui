@@ -25,27 +25,55 @@
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton_agregar_area">
-     <property name="text">
-      <string>Agregar Área</string>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>1</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QTableWidget" name="tableWidget_area"/>
-   </item>
-   <item>
-    <widget class="QPushButton" name="pushButton_editar_area">
-     <property name="text">
-      <string>Editar Area</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="pushButton_eliminar_area">
-     <property name="text">
-      <string>Eliminar Area</string>
-     </property>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Tab 1</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="placeholderText">
+          <string>0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_agregar_area">
+         <property name="text">
+          <string>Agregar Área</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Tab 2</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QTableWidget" name="tableWidget_area"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_editar_area">
+         <property name="text">
+          <string>Editar Area</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_eliminar_area">
+         <property name="text">
+          <string>Eliminar Area</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
   </layout>
