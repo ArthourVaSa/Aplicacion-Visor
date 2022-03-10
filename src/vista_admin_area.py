@@ -11,11 +11,15 @@ from database.modelos import *
 
 class VistaAdminArea(QDialog):
 
-    def __init__(self):
+    def __init__(self, texto):
         QDialog.__init__(self)
         uic.loadUi("vistas/VistaAdminArea.ui",self)
 
+        self.texto = texto
+
         self.setWindowTitle("Administrador")
+
+        self.label_empresa.setText(self.texto)
 
         #agregar area
         self.lineEdit_nombre_area.returnPressed.connect(self.agregar_area)

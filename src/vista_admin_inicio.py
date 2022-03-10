@@ -17,18 +17,17 @@ class VistaAdminInicio(QDialog):
         uic.loadUi("vistas/VistaAdminInicio.ui",self)
 
         self.texto_pasado = texto
-        print(type(self.texto_pasado))
 
         self.setWindowTitle("Inicio Administrador")
 
-        self.label_nombre_empresa.text(self.texto_pasado)
+        self.label_nombre_empresa.setText(self.texto_pasado)
 
         self.pushButton_def_area_empresa.clicked.connect(self.go_to_def_area)
 
     def go_to_def_area(self):
         QDialog.__init__(self)
-        self.ir_super_user = VistaAdminArea()
-        self.ir_super_user.__init__()
+        self.ir_super_user = VistaAdminArea(self.texto_pasado)
+        # self.ir_super_user.__init__()
 
         self.ir_super_user.show()
 
