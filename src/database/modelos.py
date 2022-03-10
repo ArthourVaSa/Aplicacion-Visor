@@ -2,8 +2,8 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 from datetime import datetime
 
-# from src.database import db
-import db
+from database import db
+# import db
 
 class User(db.Base):
     __tablename__ = 'users'

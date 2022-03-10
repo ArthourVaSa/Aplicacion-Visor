@@ -5,16 +5,16 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from src.vista_superuser import *
-from src.vista_super_empresa import *
-from src.inicio_sesion import *
+from vista_superuser import *
+from vista_super_empresa import *
+# from src.inicio_sesion import *
 
 import time
 
 class VistaSuperInicio(QDialog):
     def __init__(self):
         QDialog.__init__(self)
-        uic.loadUi("src/vistas/VistaSuperInicio.ui",self)
+        uic.loadUi("vistas/VistaSuperInicio.ui",self)
 
         self.pushButton_funciones_usuarios.clicked.connect(self.go_to_usuario)
         self.pushButton_funciones_empresas.clicked.connect(self.go_to_empresa)
@@ -43,11 +43,11 @@ class VistaSuperInicio(QDialog):
             event.ignore()
 
     
-    def volver_inicio_sesion(self):
-        self.dlgInicioSesionVista = QDialog()
-        self.ui = Ui_dlgInicioSesionVista()
-        self.ui.setupUi(self.dlgInicioSesionVista)
-        self.dlgInicioSesionVista.show()
+    # def volver_inicio_sesion(self):
+    #     self.dlgInicioSesionVista = QDialog()
+    #     self.ui = Ui_dlgInicioSesionVista()
+    #     self.ui.setupUi(self.dlgInicioSesionVista)
+    #     self.dlgInicioSesionVista.show()
 
 def main():
     app = QApplication(sys.argv)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>496</height>
+    <width>460</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="label_empresa">
      <property name="text">
       <string>Nombre de la Empresa</string>
      </property>
@@ -25,19 +25,26 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="pushButton_actualizar">
+     <property name="text">
+      <string>Actualizar</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>1</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="agreagar_area">
       <attribute name="title">
-       <string>Tab 1</string>
+       <string>Agregar Area</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="lineEdit_nombre_area">
          <property name="placeholderText">
-          <string>0</string>
+          <string>Ingrese el nombre del área a crear</string>
          </property>
         </widget>
        </item>
@@ -50,9 +57,9 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="ver_editar_eliminar">
       <attribute name="title">
-       <string>Tab 2</string>
+       <string>Ver, Editar y Eliminar</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
@@ -61,14 +68,14 @@
        <item>
         <widget class="QPushButton" name="pushButton_editar_area">
          <property name="text">
-          <string>Editar Area</string>
+          <string>Editar Área</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_eliminar_area">
          <property name="text">
-          <string>Eliminar Area</string>
+          <string>Eliminar Área</string>
          </property>
         </widget>
        </item>

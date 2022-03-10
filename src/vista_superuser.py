@@ -6,14 +6,14 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from src.database import db
-from src.database.modelos import *
+from database import db
+from database.modelos import *
 
 class VistaSuperUser(QDialog):
 
     def __init__(self):
         QDialog.__init__(self)
-        uic.loadUi("src/vistas/VistaSuperUsuario.ui",self)
+        uic.loadUi("vistas/VistaSuperUsuario.ui",self)
 
         self.setWindowTitle("Super Usuario")
 

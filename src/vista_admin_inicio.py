@@ -1,3 +1,4 @@
+from ast import Lambda
 import sys
 from tkinter import SEL
 from PyQt5 import uic
@@ -6,15 +7,21 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from vista_admin_area import *
+from models.empresa import *
 
 import time
 
 class VistaAdminInicio(QDialog):
-    def __init__(self):
+    def __init__(self, texto):
         QDialog.__init__(self)
-        uic.loadUi("src/vistas/VistaAdminInicio.ui",self)
+        uic.loadUi("vistas/VistaAdminInicio.ui",self)
+
+        self.texto_pasado = texto
+        print(type(self.texto_pasado))
 
         self.setWindowTitle("Inicio Administrador")
+
+        self.label_nombre_empresa.text(self.texto_pasado)
 
         self.pushButton_def_area_empresa.clicked.connect(self.go_to_def_area)
 
@@ -34,11 +41,11 @@ class VistaAdminInicio(QDialog):
         else:
             event.ignore()
 
-def main():
-    app = QApplication(sys.argv)
-    window = VistaAdminInicio()
-    window.show()
-    sys.exit(app.exec_())
+# def main():
+#     app = QApplication(sys.argv)
+#     window = VistaAdminInicio()
+#     window.show()
+#     sys.exit(app.exec_())
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()

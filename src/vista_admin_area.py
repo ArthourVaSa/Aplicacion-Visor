@@ -13,15 +13,25 @@ class VistaAdminArea(QDialog):
 
     def __init__(self):
         QDialog.__init__(self)
-        uic.loadUi("src/vistas/VistaAdminArea.ui",self)
+        uic.loadUi("vistas/VistaAdminArea.ui",self)
 
         self.setWindowTitle("Administrador")
 
         #agregar area
-        self.pushButton_agregar_area.clicked.connect(self.go_to_add_area)
+        self.lineEdit_nombre_area.returnPressed.connect(self.agregar_area)
+        self.pushButton_agregar_area.clicked.connect(self.agregar_area)
 
-    def go_to_add_area(self):
-        pass
+    def agregar_area(self):
+        nombre_area = self.lineEdit_nombre_area.text()
+
+        if (len(nombre_area) == 0):
+            mensaje = QMessageBox()
+            mensaje.setText("Ha ocurrido un error.")
+            mensaje.setInformativeText("Por favor inserte el nombre del área a crear")
+            mensaje.setWindowTitle("ERROR")
+            mensaje.exec_()
+        else:
+            pass
 
                
 

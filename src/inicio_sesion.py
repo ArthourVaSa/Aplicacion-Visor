@@ -10,10 +10,11 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-from src.vista_super_inicio import VistaSuperInicio
+from vista_admin_inicio import *
+from vista_super_inicio import VistaSuperInicio
 
-from src.database import db
-from src.database.modelos import *
+from database import db
+from database.modelos import *
 
 import time
 
@@ -194,7 +195,8 @@ class Ui_dlgInicioSesionVista(object):
             
             if(nombre_rol[0] == "SuperUsuario"):
                 self.go_to_super_inicio(dlgInicioSesionVista)
-            
+            elif (nombre_rol[0] == "Administrador"):
+                self.go_to_admin_area(dlgInicioSesionVista,nombre,password)
 
             return True
 
@@ -207,6 +209,23 @@ class Ui_dlgInicioSesionVista(object):
         dlgInicioSesionVista.close()
 
         self.ir_super_inicio.show()
+
+    def go_to_admin_area(self, dlgInicioSesionVista, name, password):
+        self.empresa_id = db.session.query(User.empresa_id).filter(User.username == name, User.password == password).first()
+        self.nombre_empresa = db.session.query(Empresa.nombre_empresa).filter(Empresa.id == self.empresa_id[0]).first()
+        texto = str(self.nombre_empresa[0])
+        self.ir_super_inicio = VistaAdminInicio(texto)
+        # self.ir_super_inicio.__init__(self.nombre_empresa[0])
+
+        time.sleep(3)
+        dlgInicioSesionVista.close()
+
+        self.ir_super_inicio.show()
+
+    def enviar_empresa(self):
+        return self.nueva_empresa
+         
+
 
 if __name__ == "__main__":
     
