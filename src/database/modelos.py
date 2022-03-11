@@ -133,11 +133,12 @@ class Area(db.Base):
     usuario = relationship('User',backref='rol')
     usuario = relationship('User',backref='area')
 
-    def __init__(self, nombre_area):
+    def __init__(self, nombre_area, id_empresa):
         self.nombre_area = nombre_area
+        self.id_empresa = id_empresa
     
     def __repr__(self):
-        return f'Area((self.nombre_area))'
+        return f'Area((self.nombre_area),(self.id_empresa))'
 
     def __str__(self):
         return self.nombre_area

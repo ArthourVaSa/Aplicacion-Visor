@@ -105,7 +105,6 @@ class VistaSuperEmpresa(QDialog):
             value = self.tableWidget_editar_empresa.currentItem().text()
             columns = ["id","nombre"]
             empresa_edit = db.session.query(Empresa).filter(Empresa.id == int(id)).first()
-            print(empresa_edit)
             empresa_edit.nombre_empresa = value
 
             db.session.add(empresa_edit)
