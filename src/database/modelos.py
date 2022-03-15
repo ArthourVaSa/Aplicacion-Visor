@@ -12,20 +12,31 @@ usuario_tip_doc = Table(
     Column('id_tipo_doc', Integer, ForeignKey('tipodocumental.id'))
 )
 
+user_area = Table(
+    'usuario_area', db.Base.metadata,
+    Column('id',Integer, primary_key=True, autoincrement=True),
+    Column('id_usuario', Integer, ForeignKey('users.id')),
+    Column('id_area', Integer, ForeignKey('area.id'))
+)
+
 class User(db.Base):
     __tablename__ = 'users'
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
-    username = Column(String(50), nullable=False, unique=True)
-    apellido = Column(String(50), nullable=False,unique=True)
-    password = Column(String(50), nullable=False, unique=True)
+    username = Column(String(50), nullable=False)
+    apellido = Column(String(50), nullable=False)
+    password = Column(String(50), nullable=False)
     created_at = Column(DateTime(), default=datetime.now)
     rol_id = Column(Integer(), ForeignKey('rol.id'))
     empresa_id = Column(Integer(), ForeignKey('empresa.id'))
-    area_id = Column(Integer(), ForeignKey('area.id'))
     tipo_documental = relationship('TipoDoc',
                       secondary=usuario_tip_doc,
                       back_populates='usuarios'
+    )
+    area = relationship(
+        'Area',
+        secondary=user_area,
+        back_populates='usuarios'
     )
 
     def __init__(self, nombre, apellido, contraseña,rol_id,empresa_id):
@@ -134,13 +145,17 @@ class Area(db.Base):
     __tablename__ = 'area'
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
-    nombre_area = Column(String(50), nullable=False, unique=True)
+    nombre_area = Column(String(50), nullable=False)
     tipo_doc = relationship('TipoDoc',
                       secondary=area_tipodoc,
                       back_populates='area'
     )
     id_empresa = Column(Integer(), ForeignKey('empresa.id'))
-    usuario = relationship('User',backref='area')
+    usuarios = relationship(
+        'User',
+        secondary=user_area,
+        back_populates='area'
+    )
 
     def __init__(self, nombre_area, id_empresa):
         self.nombre_area = nombre_area
@@ -180,7 +195,7 @@ class IndiceBusqueda(db.Base):
     __tablename__ = 'indicebusqueda'
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
-    nombre_archivo = Column(String(50), nullable=False, unique=True)
+    nombre_archivo = Column(String(50), nullable=False)
     indice_busqueda = Column(String(10000), nullable=False)
     id_tipo_doc = Column(Integer(), ForeignKey('tipodocumental.id'))
 
