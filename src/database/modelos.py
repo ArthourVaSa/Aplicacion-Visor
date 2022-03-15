@@ -5,6 +5,13 @@ from datetime import datetime
 from database import db
 # import db
 
+usuario_tip_doc = Table(
+    'usuario_tipo_documental', db.Base.metadata,
+    Column('id',Integer, primary_key=True, autoincrement=True),
+    Column('id_usuario', Integer, ForeignKey('users.id')),
+    Column('id_tipo_doc', Integer, ForeignKey('tipodocumental.id'))
+)
+
 class User(db.Base):
     __tablename__ = 'users'
 
@@ -16,7 +23,10 @@ class User(db.Base):
     rol_id = Column(Integer(), ForeignKey('rol.id'))
     empresa_id = Column(Integer(), ForeignKey('empresa.id'))
     area_id = Column(Integer(), ForeignKey('area.id'))
-    tipo_doc = Column(String(50), ForeignKey('tipodocumental.tipo_doc'))
+    tipo_documental = relationship('TipoDoc',
+                      secondary=usuario_tip_doc,
+                      back_populates='usuarios'
+    )
 
     def __init__(self, nombre, apellido, contraseña,rol_id,empresa_id):
         self.username = nombre
@@ -130,7 +140,6 @@ class Area(db.Base):
                       back_populates='area'
     )
     id_empresa = Column(Integer(), ForeignKey('empresa.id'))
-    usuario = relationship('User',backref='rol')
     usuario = relationship('User',backref='area')
 
     def __init__(self, nombre_area, id_empresa):
@@ -152,16 +161,17 @@ class TipoDoc(db.Base):
                       secondary=area_tipodoc,
                       back_populates='tipo_doc'
     )
-    id_indice_busqueda = Column(Integer(), ForeignKey('indicebusqueda.id'))
-    usuario = relationship('User',backref='tipodocumental')
+    indice_busqueda = relationship('IndiceBusqueda',backref='tipodocumental')
+    usuarios = relationship('User',
+                      secondary=usuario_tip_doc,
+                      back_populates='tipo_documental'
+    )
 
-    def __init__(self, tipo_doc, archivo, id_i_b):
+    def __init__(self, tipo_doc):
         self.tipo_doc = tipo_doc
-        self.archivo = archivo
-        self.id_indice_busqueda = id_i_b
 
     def __repr__(self):
-        return f'TipoDoc((self.tipo_doc),(self.archivo),(self.id_indice_busqueda))'
+        return f'TipoDoc((self.tipo_doc),(self.archivo))'
 
     def __str__(self):
         return self.tipo_doc
@@ -172,14 +182,15 @@ class IndiceBusqueda(db.Base):
     id = Column(Integer(), primary_key=True, autoincrement=True)
     nombre_archivo = Column(String(50), nullable=False, unique=True)
     indice_busqueda = Column(String(10000), nullable=False)
-    tipodoc = relationship('TipoDoc',backref='indicebusqueda')
+    id_tipo_doc = Column(Integer(), ForeignKey('tipodocumental.id'))
 
-    def __init__(self, nombre_archivo, indice_busqueda):
+    def __init__(self, nombre_archivo, indice_busqueda, id_tipo_doc):
         self.nombre_archivo = nombre_archivo
         self.indice_busqueda = indice_busqueda
+        self.id_tipo_doc = id_tipo_doc
 
     def __repr__(self):
-        return f'IndiceBusqueda((self.nombre_archivo),(self.indice_busqueda))'
+        return f'IndiceBusqueda((self.nombre_archivo),(self.indice_busqueda),(self.id_tipo_doc))'
 
     def __str__(self):
         return self.nombre_archivo
