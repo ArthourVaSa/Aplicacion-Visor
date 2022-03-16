@@ -1,6 +1,5 @@
 from pyexpat import model
 import sys
-from tkinter import E
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
