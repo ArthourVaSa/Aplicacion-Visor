@@ -58,16 +58,11 @@
          <property name="title">
           <string>Áreas</string>
          </property>
-         <widget class="QComboBox" name="comboBox_areas">
-          <property name="geometry">
-           <rect>
-            <x>10</x>
-            <y>80</y>
-            <width>402</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QComboBox" name="comboBox_areas"/>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>

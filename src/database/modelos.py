@@ -16,7 +16,8 @@ user_area = Table(
     'usuario_area', db.Base.metadata,
     Column('id',Integer, primary_key=True, autoincrement=True),
     Column('id_usuario', Integer, ForeignKey('users.id')),
-    Column('id_area', Integer, ForeignKey('area.id'))
+    Column('id_area', Integer, ForeignKey('area.id')),
+    Column('id_empresa', Integer,nullable=false)
 )
 
 class User(db.Base):
