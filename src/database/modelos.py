@@ -2,7 +2,7 @@ from sqlalchemy import *
 from sqlalchemy.orm import *
 from datetime import datetime
 
-from database import db
+from src.database import db
 # import db
 
 usuario_tip_doc = Table(

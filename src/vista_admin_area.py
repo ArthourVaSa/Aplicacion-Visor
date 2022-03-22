@@ -6,14 +6,14 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from database import db
-from database.modelos import *
+from src.database import db
+from src.database.modelos import *
 
 class VistaAdminArea(QDialog):
 
     def __init__(self, texto):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminArea.ui",self)
+        uic.loadUi("src/vistas/VistaAdminArea.ui",self)
 
         self.texto = texto
 

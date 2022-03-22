@@ -10,11 +10,11 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
-from vista_admin_inicio import *
-from vista_super_inicio import VistaSuperInicio
+from src.vista_admin_inicio import *
+from src.vista_super_inicio import VistaSuperInicio
 
-from database import db
-from database.modelos import *
+from src.database import db
+from src.database.modelos import *
 
 import time
 

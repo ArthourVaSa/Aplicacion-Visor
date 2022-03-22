@@ -1,18 +1,22 @@
+import os
+import shutil
+
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from database import db
-from database.modelos import *
+from src.database import db
+from src.database.modelos import *
 
 class VistaAdminCargarArchivos(QDialog):
     def __init__(self, texto):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminCargarArchivos.ui",self)
+        uic.loadUi("src/vistas/VistaAdminCargarArchivos.ui",self)
 
         self.lista_areas = []
         self.lista_ind_bus = []
+        self.ind_busqueda = {}
 
         self.texto = texto
 
@@ -39,11 +43,14 @@ class VistaAdminCargarArchivos(QDialog):
         #parte de agregar índices de búsqueda
         self.lineEdit_i_b.returnPressed.connect(self.agregar_i_b)
         self.pushButton_agregar_i_b.clicked.connect(self.agregar_i_b)
+
+        #parte de guaradr
+        self.pushButton_guardar_datos.clicked.connect(self.guardar_datos)
         
     def cargar_path(self):
-        path = QFileDialog.getExistingDirectory(self,'Buscar directorio',QDir.homePath())
-        if path:
-            self.lineEdit_path.setText(path)
+        self.path = QFileDialog.getExistingDirectory(self,'Buscar directorio',QDir.homePath())
+        if self.path:
+            self.lineEdit_path.setText(self.path)
 
     def agregar_i_b(self):
         i_b = QStringListModel()
@@ -56,11 +63,40 @@ class VistaAdminCargarArchivos(QDialog):
         tipo_doc =  self.lineEdit_tipo_documental.text()
         tp = TipoDoc(str(tipo_doc))
         db.session.add(tp)
-        db.session.commit(tp)
+        db.session.commit()
 
         area = self.comboBox_area.currentText()
         area_rel = db.session.query(Area).filter(Area.nombre_area == str(area),Area.id_empresa == self.id_empresa[0]).all()
 
         area_rel[0].tipo_doc += [tp]
+        db.session.commit()
 
+        for ib in self.lista_ind_bus:
+            self.ind_busqueda[ib] = ""
+
+        mapa_stringneado = str(self.ind_busqueda)
+
+        list_archivos = os.listdir(self.path)
         
+        path_ruta = os.getcwd()
+        path_ruta_u = path_ruta.replace("\\","/")
+        print(path_ruta_u)
+
+        if(os.path.isdir('{}/Documentos/{}/{}/{}'.format(path_ruta,self.texto,area,tipo_doc))):
+            mensaje = QMessageBox()
+            mensaje.setText("El directorio ya existe")
+            mensaje.setInformativeText("Por favor, asegúrese de cargar los archivos de manera correcta")
+            mensaje.setWindowTitle("Error")
+            mensaje.exec_()
+        else:
+            os.makedirs('{}/Documentos/{}/{}/{}'.format(path_ruta_u,self.texto,area,tipo_doc))
+
+        for direc in list_archivos:
+            shutil.copy("{}/{}".format(self.path,direc),'{}/Documentos/{}/{}/{}'.format(path_ruta_u,self.texto,area,tipo_doc))
+
+        for archivo in list_archivos:
+            indice_bus = IndiceBusqueda(archivo,mapa_stringneado,tp.id)
+            db.session.add(indice_bus)
+        db.session.commit()
+
+

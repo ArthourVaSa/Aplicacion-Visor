@@ -6,18 +6,17 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from vista_admin_archivos_usuarios import *
-from vista_admin_cargar_archivos import *
-from vista_admin_user import *
-from vista_admin_area import *
-from models.empresa import *
+from src.vista_admin_archivos_usuarios import *
+from src.vista_admin_cargar_archivos import *
+from src.vista_admin_user import *
+from src.vista_admin_area import *
 
 import time
 
 class VistaAdminInicio(QDialog):
     def __init__(self, texto):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminInicio.ui",self)
+        uic.loadUi("src/vistas/VistaAdminInicio.ui",self)
 
         self.texto_pasado = texto
 

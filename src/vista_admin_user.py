@@ -3,13 +3,13 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from database import db
-from database.modelos import *
+from src.database import db
+from src.database.modelos import *
 
 class VistaAdminUser(QDialog):
     def __init__(self, texto):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminUser.ui",self)
+        uic.loadUi("src/vistas/VistaAdminUser.ui",self)
 
         self.lista_usuarios = []
         self.lista_areas = []
