@@ -49,35 +49,12 @@
     <string>Nombre de la Empresa</string>
    </property>
   </widget>
-  <widget class="QScrollArea" name="scrollArea_i_b">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>120</y>
-     <width>611</width>
-     <height>281</height>
-    </rect>
-   </property>
-   <property name="widgetResizable">
-    <bool>true</bool>
-   </property>
-   <widget class="QWidget" name="scrollAreaWidgetContents">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>609</width>
-      <height>279</height>
-     </rect>
-    </property>
-   </widget>
-  </widget>
   <widget class="QPushButton" name="pushButton_guardar_datos">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>0</x>
      <y>410</y>
-     <width>101</width>
+     <width>630</width>
      <height>23</height>
     </rect>
    </property>
@@ -88,9 +65,9 @@
   <widget class="QComboBox" name="comboBox_area">
    <property name="geometry">
     <rect>
-     <x>280</x>
+     <x>255</x>
      <y>40</y>
-     <width>69</width>
+     <width>130</width>
      <height>22</height>
     </rect>
    </property>
@@ -108,7 +85,7 @@
     <string>CargarArchivos</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit__path">
+  <widget class="QLineEdit" name="lineEdit_path">
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -124,14 +101,50 @@
   <widget class="QPushButton" name="pushButton_agregar_i_b">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>410</y>
+     <x>50</x>
+     <y>250</y>
      <width>151</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
     <string>Agregar índice de Búsqueda</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>45</y>
+     <width>47</width>
+     <height>13</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Área</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_i_b">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>220</y>
+     <width>113</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QListView" name="listView_i_b">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>120</y>
+     <width>341</width>
+     <height>271</height>
+    </rect>
    </property>
   </widget>
  </widget>

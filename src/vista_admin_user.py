@@ -3,13 +3,13 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from database import db
-from database.modelos import *
+from src.database import db
+from src.database.modelos import *
 
 class VistaAdminUser(QDialog):
     def __init__(self, texto):
         QDialog.__init__(self)
-        uic.loadUi("vistas/VistaAdminUser.ui",self)
+        uic.loadUi("src/vistas/VistaAdminUser.ui",self)
 
         self.lista_usuarios = []
         self.lista_areas = []
@@ -36,6 +36,11 @@ class VistaAdminUser(QDialog):
 
         self.pushButton_def_relacion.clicked.connect(self.definir_relacion)
 
+        #parte tabla
+        relacion = db.session.query(Area).filter(Area.usuarios.any(User.username == 'Miqueas')).all()
+        for dato in relacion:
+            print(dato)
+
     def definir_relacion(self):
 
         try:
@@ -46,6 +51,8 @@ class VistaAdminUser(QDialog):
             area_rel = db.session.query(Area).filter(Area.nombre_area == str(area),Area.id_empresa == self.id_empresa[0]).all()
 
             area_rel[0].usuarios += [user_rel[0]]
+
+            area_rel[0].usuarios 
 
             db.session.commit()
 
