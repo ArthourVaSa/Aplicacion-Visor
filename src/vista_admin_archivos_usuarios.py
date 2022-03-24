@@ -16,3 +16,7 @@ class VistaAdminArchivosUser(QDialog):
         self.setWindowTitle("Administrador")
 
         self.label.setText(self.texto)
+
+        #parte de la relación
+        self.id_empresa = db.session.query(Empresa.id).filter(Empresa.nombre_empresa == self.texto).first()
+        self.tipo_doc = db.session.query(TipoDoc.tipo_doc).filter(Empresa.id == Area.id_empresa, )
