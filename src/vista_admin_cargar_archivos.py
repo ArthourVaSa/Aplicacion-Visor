@@ -60,43 +60,55 @@ class VistaAdminCargarArchivos(QDialog):
         self.listView_i_b.setModel(i_b)
 
     def guardar_datos(self):
-        tipo_doc =  self.lineEdit_tipo_documental.text()
-        tp = TipoDoc(str(tipo_doc))
-        db.session.add(tp)
-        db.session.commit()
+        try:
+            tipo_doc =  self.lineEdit_tipo_documental.text()
+            tp = TipoDoc(str(tipo_doc))
+            db.session.add(tp)
+            db.session.commit()
 
-        area = self.comboBox_area.currentText()
-        area_rel = db.session.query(Area).filter(Area.nombre_area == str(area),Area.id_empresa == self.id_empresa[0]).all()
+            area = self.comboBox_area.currentText()
+            area_rel = db.session.query(Area).filter(Area.nombre_area == str(area),Area.id_empresa == self.id_empresa[0]).all()
 
-        area_rel[0].tipo_doc += [tp]
-        db.session.commit()
+            area_rel[0].tipo_doc += [tp]
+            db.session.commit()
 
-        for ib in self.lista_ind_bus:
-            self.ind_busqueda[ib] = ""
+            for ib in self.lista_ind_bus:
+                self.ind_busqueda[ib] = ""
 
-        mapa_stringneado = str(self.ind_busqueda)
+            mapa_stringneado = str(self.ind_busqueda)
 
-        list_archivos = os.listdir(self.path)
-        
-        path_ruta = os.getcwd()
-        path_ruta_u = path_ruta.replace("\\","/")
-        print(path_ruta_u)
+            list_archivos = os.listdir(self.path)
+            
+            path_ruta = os.getcwd()
+            path_ruta_u = path_ruta.replace("\\","/")
+            print(path_ruta_u)
 
-        if(os.path.isdir('{}/Documentos/{}/{}/{}'.format(path_ruta,self.texto,area,tipo_doc))):
+            if(os.path.isdir('{}/Documentos/{}/{}/{}'.format(path_ruta,self.texto,area,tipo_doc))):
+                mensaje = QMessageBox()
+                mensaje.setText("El directorio ya existe")
+                mensaje.setInformativeText("Por favor, asegúrese de cargar los archivos de manera correcta")
+                mensaje.setWindowTitle("Error")
+                mensaje.exec_()
+            else:
+                os.makedirs('{}/Documentos/{}/{}/{}'.format(path_ruta_u,self.texto,area,tipo_doc))
+
+            for direc in list_archivos:
+                shutil.copy("{}/{}".format(self.path,direc),'{}/Documentos/{}/{}/{}'.format(path_ruta_u,self.texto,area,tipo_doc))
+
+            for archivo in list_archivos:
+                indice_bus = IndiceBusqueda(archivo,mapa_stringneado,tp.id)
+                db.session.add(indice_bus)
+                db.session.commit()
+
+            mensaje.setText("Tarea Realizada")
+            mensaje.setInformativeText("La tarea ha sido cumplida. Se han guardado los archivos y las relaciones de manera satisfactoriamente")
+            mensaje.setWindowTitle("Tarea completa")
+            mensaje.exec_()
+        except:
             mensaje = QMessageBox()
-            mensaje.setText("El directorio ya existe")
-            mensaje.setInformativeText("Por favor, asegúrese de cargar los archivos de manera correcta")
+            mensaje.setText("ERROR")
+            mensaje.setInformativeText("Ha ocurrido un error al momento de realizar la tarea")
             mensaje.setWindowTitle("Error")
             mensaje.exec_()
-        else:
-            os.makedirs('{}/Documentos/{}/{}/{}'.format(path_ruta_u,self.texto,area,tipo_doc))
-
-        for direc in list_archivos:
-            shutil.copy("{}/{}".format(self.path,direc),'{}/Documentos/{}/{}/{}'.format(path_ruta_u,self.texto,area,tipo_doc))
-
-        for archivo in list_archivos:
-            indice_bus = IndiceBusqueda(archivo,mapa_stringneado,tp.id)
-            db.session.add(indice_bus)
-        db.session.commit()
 
 
