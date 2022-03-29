@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>643</width>
+    <width>730</width>
     <height>579</height>
    </rect>
   </property>
@@ -38,7 +38,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>643</width>
+     <width>730</width>
      <height>21</height>
     </rect>
    </property>
@@ -48,6 +48,9 @@
     </property>
     <addaction name="separator"/>
     <addaction name="opcionSalir"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdministrador"/>
+    <addaction name="actionSuperUsuario"/>
    </widget>
    <widget class="QMenu" name="menuAyuda">
     <property name="title">
@@ -119,7 +122,11 @@
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QTreeView" name="treeViewBuscador"/>
+      <widget class="QTreeView" name="treeViewBuscador">
+       <property name="expandsOnDoubleClick">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -169,7 +176,7 @@
   <action name="opcionSalir">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/cancelar.png</normaloff>../src/img/cancelar.png</iconset>
+     <normaloff>../img/cancelar.png</normaloff>../img/cancelar.png</iconset>
    </property>
    <property name="text">
     <string>Salir</string>
@@ -178,7 +185,7 @@
   <action name="actionCopiar">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/copiar.png</normaloff>../src/img/copiar.png</iconset>
+     <normaloff>../img/copiar.png</normaloff>../img/copiar.png</iconset>
    </property>
    <property name="text">
     <string>Copiar</string>
@@ -187,7 +194,7 @@
   <action name="actionCortar">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/tijeras.png</normaloff>../src/img/tijeras.png</iconset>
+     <normaloff>../img/tijeras.png</normaloff>../img/tijeras.png</iconset>
    </property>
    <property name="text">
     <string>Cortar</string>
@@ -196,7 +203,7 @@
   <action name="actionPegar">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/pegar.png</normaloff>../src/img/pegar.png</iconset>
+     <normaloff>../img/pegar.png</normaloff>../img/pegar.png</iconset>
    </property>
    <property name="text">
     <string>Pegar</string>
@@ -205,7 +212,7 @@
   <action name="actionImprimir">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/impresora.png</normaloff>../src/img/impresora.png</iconset>
+     <normaloff>../img/impresora.png</normaloff>../img/impresora.png</iconset>
    </property>
    <property name="text">
     <string>Imprimir</string>
@@ -214,7 +221,7 @@
   <action name="actionExportar">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/exportar.png</normaloff>../src/img/exportar.png</iconset>
+     <normaloff>../img/exportar.png</normaloff>../img/exportar.png</iconset>
    </property>
    <property name="text">
     <string>Exportar</string>
@@ -223,7 +230,7 @@
   <action name="actionDigitalizar">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/tableta-digitalizadora.png</normaloff>../src/img/tableta-digitalizadora.png</iconset>
+     <normaloff>../img/tableta-digitalizadora.png</normaloff>../img/tableta-digitalizadora.png</iconset>
    </property>
    <property name="text">
     <string>Digitalizar</string>
@@ -232,7 +239,7 @@
   <action name="actionAcerca_de">
    <property name="icon">
     <iconset>
-     <normaloff>../src/img/ayuda.png</normaloff>../src/img/ayuda.png</iconset>
+     <normaloff>../img/ayuda.png</normaloff>../img/ayuda.png</iconset>
    </property>
    <property name="text">
     <string>Acerca de</string>
@@ -244,6 +251,16 @@
    </property>
    <property name="text">
     <string>Cargar Archivos</string>
+   </property>
+  </action>
+  <action name="actionAdministrador">
+   <property name="text">
+    <string>Administrador</string>
+   </property>
+  </action>
+  <action name="actionSuperUsuario">
+   <property name="text">
+    <string>SuperUsuario</string>
    </property>
   </action>
  </widget>
