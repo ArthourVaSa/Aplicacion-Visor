@@ -35,7 +35,6 @@ class VistaAdminInicio(QDialog):
     def go_to_def_area(self):
         QDialog.__init__(self)
         self.ir_super_user = VistaAdminArea(self.texto_pasado)
-        # self.ir_super_user.__init__()
 
         self.ir_super_user.show()
 
@@ -53,21 +52,3 @@ class VistaAdminInicio(QDialog):
         QDialog.__init__(self)
         self.ir_archivos_user = VistaAdminArchivosUser(self.texto_pasado)
         self.ir_archivos_user.show()
-
-    def closeEvent(self, event):
-        reply = QMessageBox.question(self,'Even - Slot',"Realmente desea cerrar la aplicación",QMessageBox.Yes | QMessageBox.No, QMessageBox.No)   
-
-        if(reply == QMessageBox.Yes):
-            time.sleep(2)
-            event.accept()
-        else:
-            event.ignore()
-
-# def main():
-#     app = QApplication(sys.argv)
-#     window = VistaAdminInicio()
-#     window.show()
-#     sys.exit(app.exec_())
-
-# if __name__ == '__main__':
-#     main()

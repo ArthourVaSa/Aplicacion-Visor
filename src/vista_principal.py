@@ -1,4 +1,6 @@
+import ast
 import os
+from re import T
 import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
@@ -19,6 +21,7 @@ class VentanaPrincipal(QMainWindow):
 
         self.empresa = empresa
         self.nombre_usuario = nombre_usuario
+        self.lista_items = ['id','nombre']
 
         #parte actions
         rol = db.session.query(User.rol_id).filter(User.username == self.nombre_usuario).first()
@@ -42,10 +45,34 @@ class VentanaPrincipal(QMainWindow):
         self.treeViewBuscador.doubleClicked.connect(self.jalar_path)
         self.modelo = QDirModel()
         self.treeViewBuscador.setModel(self.modelo)
-        self.treeViewBuscador.setRootIndex(self.modelo.index('{}/Documentos/'.format(path_ruta_local)))
+        self.treeViewBuscador.setRootIndex(self.modelo.index('{}/Documentos/{}'.format(path_ruta_local,self.empresa)))
+
+        #parte del tablewidget  
 
     def jalar_path(self, Qmodelidx):
         print(self.modelo.filePath(Qmodelidx))
+        self.nombre_tipodoc = self.modelo.fileName(Qmodelidx)
+        self.parte_table(self.nombre_tipodoc)
+        
+    def parte_table(self, nombre):
+        tipo_doc = db.session.query(TipoDoc.id).filter(TipoDoc.tipo_doc == nombre).first()
+        indices_bus = db.session.query(IndiceBusqueda).filter(IndiceBusqueda.id_tipo_doc == tipo_doc[0]).all()
+
+        row = 0
+        for data in indices_bus:
+            self.tableWidget_Llenado.insertRow(row)
+            id = QTableWidgetItem(str(data.id))
+            nombre = QTableWidgetItem(str(data.nombre_archivo))
+            self.mapa = ast.literal_eval(data.indice_busqueda)
+            self.tableWidget_Llenado.setItem(row,0,id)
+            self.tableWidget_Llenado.setItem(row,1,nombre)
+            row = row + 1
+        
+        for k in self.mapa.keys():
+            self.lista_items.append(k)
+
+        self.tableWidget_Llenado.setColumnCount(len(self.lista_items))    
+        self.tableWidget_Llenado.setHorizontalHeaderLabels(self.lista_items) 
 
     def abrir_pdf(self):
         path, _ = QFileDialog.getOpenFileName(self, "Seleccione un Archivo", "", "pdf(*.pdf)")
@@ -67,20 +94,20 @@ class VentanaPrincipal(QMainWindow):
 
         self.ir_super_inicio.show()
 
-    def go_to_admin_area(self, name):
-        self.empresa_id = db.session.query(User.empresa_id).filter(User.username == name).first()
+    def go_to_admin_area(self):
+        self.empresa_id = db.session.query(User.empresa_id).filter(User.username == self.nombre_usuario).first()
+        print(self.empresa_id[0])
         self.nombre_empresa = db.session.query(Empresa.nombre_empresa).filter(Empresa.id == self.empresa_id[0]).first()
         texto = str(self.nombre_empresa[0])
         self.ir_super_inicio = VistaAdminInicio(texto)
 
         self.ir_super_inicio.show()
-
-def main():
-    print('Todo tranqui')
     
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    window = VentanaPrincipal()
-    window.showMaximized()
-    main()
-    sys.exit(app.exec_())
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self,'Even - Slot',"Realmente desea cerrar la aplicación",QMessageBox.Yes | QMessageBox.No, QMessageBox.No)   
+
+        if(reply == QMessageBox.Yes):
+            time.sleep(2)
+            event.accept()
+        else:
+            event.ignore()
