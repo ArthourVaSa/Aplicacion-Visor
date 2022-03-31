@@ -10,6 +10,7 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from src.vista_principal import VentanaPrincipal
 from src.vista_admin_inicio import *
 from src.vista_super_inicio import VistaSuperInicio
 
@@ -190,37 +191,27 @@ class Ui_dlgInicioSesionVista(object):
             nombre = self.leUsuario.text()
             password = self.lePassword.text()
 
-            rol = db.session.query(User.rol_id).filter(User.username == nombre, User.password == password).first()
-            nombre_rol = db.session.query(Rol.rol_nombre).filter(Rol.id == rol[0]).first()
+            usuario = db.session.query(User).filter(User.username == nombre, User.password == password).first()
             
-            if(nombre_rol[0] == "SuperUsuario"):
-                self.go_to_super_inicio(dlgInicioSesionVista)
-            elif (nombre_rol[0] == "Administrador"):
-                self.go_to_admin_area(dlgInicioSesionVista,nombre,password)
+            self.go_to_vista_principal(dlgInicioSesionVista,nombre,password)
+
+            # try:
+                
+            # except:
+            #     print('ERROR')
 
             return True
 
-    def go_to_super_inicio(self,dlgInicioSesionVista):
-        # QtWidgets.QDialog.__init__(QtWidgets.QDialog)
-        self.ir_super_inicio = VistaSuperInicio()
-        self.ir_super_inicio.__init__()
+    def go_to_vista_principal(self,dlgInicioSesionVista,nombre,password):
+        empresa_id = db.session.query(User.empresa_id).filter(User.username == nombre, User.password == password).first()
+        nombre_empresa = db.session.query(Empresa.nombre_empresa).filter(Empresa.id == empresa_id[0]).first()
+        texto = str(nombre_empresa[0])
+        self.ir_vista_principal = VentanaPrincipal(texto,nombre)
 
         time.sleep(3)
         dlgInicioSesionVista.close()
 
-        self.ir_super_inicio.show()
-
-    def go_to_admin_area(self, dlgInicioSesionVista, name, password):
-        self.empresa_id = db.session.query(User.empresa_id).filter(User.username == name, User.password == password).first()
-        self.nombre_empresa = db.session.query(Empresa.nombre_empresa).filter(Empresa.id == self.empresa_id[0]).first()
-        texto = str(self.nombre_empresa[0])
-        self.ir_super_inicio = VistaAdminInicio(texto)
-        # self.ir_super_inicio.__init__(self.nombre_empresa[0])
-
-        time.sleep(3)
-        dlgInicioSesionVista.close()
-
-        self.ir_super_inicio.show()
+        self.ir_vista_principal.showMaximized()
 
     def enviar_empresa(self):
         return self.nueva_empresa

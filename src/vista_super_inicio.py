@@ -32,28 +32,3 @@ class VistaSuperInicio(QDialog):
         self.ir_super_empresa.__init__()
 
         self.ir_super_empresa.show()
-
-    def closeEvent(self, event):
-        reply = QMessageBox.question(self,'Even - Slot',"Realmente desea cerrar la aplicación",QMessageBox.Yes | QMessageBox.No, QMessageBox.No)   
-
-        if(reply == QMessageBox.Yes):
-            time.sleep(2)
-            event.accept()
-        else:
-            event.ignore()
-
-    
-    # def volver_inicio_sesion(self):
-    #     self.dlgInicioSesionVista = QDialog()
-    #     self.ui = Ui_dlgInicioSesionVista()
-    #     self.ui.setupUi(self.dlgInicioSesionVista)
-    #     self.dlgInicioSesionVista.show()
-
-def main():
-    app = QApplication(sys.argv)
-    window = VistaSuperInicio()
-    window.show()
-    sys.exit(app.exec_())
-
-if __name__ == '__main__':
-    main()
