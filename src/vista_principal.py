@@ -50,29 +50,51 @@ class VentanaPrincipal(QMainWindow):
         #parte del tablewidget  
 
     def jalar_path(self, Qmodelidx):
-        print(self.modelo.filePath(Qmodelidx))
+        self.tableWidget_Llenado.clear()
+        self.deleteAllRows(self.tableWidget_Llenado)
+        self.lista_items.clear()
+        self.lista_items = ['id','nombre']
         self.nombre_tipodoc = self.modelo.fileName(Qmodelidx)
-        self.parte_table(self.nombre_tipodoc)
-        
-    def parte_table(self, nombre):
-        tipo_doc = db.session.query(TipoDoc.id).filter(TipoDoc.tipo_doc == nombre).first()
+        self.path = self.modelo.filePath(Qmodelidx)
+        tipo_doc = db.session.query(TipoDoc.id).filter(TipoDoc.tipo_doc == self.nombre_tipodoc).first()
         indices_bus = db.session.query(IndiceBusqueda).filter(IndiceBusqueda.id_tipo_doc == tipo_doc[0]).all()
 
         row = 0
         for data in indices_bus:
-            self.tableWidget_Llenado.insertRow(row)
-            id = QTableWidgetItem(str(data.id))
-            nombre = QTableWidgetItem(str(data.nombre_archivo))
             self.mapa = ast.literal_eval(data.indice_busqueda)
-            self.tableWidget_Llenado.setItem(row,0,id)
-            self.tableWidget_Llenado.setItem(row,1,nombre)
-            row = row + 1
         
         for k in self.mapa.keys():
             self.lista_items.append(k)
 
         self.tableWidget_Llenado.setColumnCount(len(self.lista_items))    
         self.tableWidget_Llenado.setHorizontalHeaderLabels(self.lista_items) 
+
+        for dato in indices_bus:
+            self.tableWidget_Llenado.insertRow(row)
+            id = QTableWidgetItem(str(dato.id))
+            nombre = QTableWidgetItem(str(dato.nombre_archivo))
+            self.tableWidget_Llenado.setItem(row,0,id)
+            self.tableWidget_Llenado.setItem(row,1,nombre)
+            row = row + 1
+
+        self.tableWidget_Llenado.itemSelectionChanged.connect(self.obtener_valor)
+
+    def obtener_valor(self):
+        try:
+            col = self.tableWidget_Llenado.currentColumn()
+            r = self.tableWidget_Llenado.currentRow()
+            valor = self.tableWidget_Llenado.item(r,col).text()
+            path_new = self.path + "/" + str(valor)
+            if path_new.__contains__(".pdf"):
+                self.openPdf(path_new)
+            else:
+                QErrorMessage(self).showMessage("El archivo no es un pdf")
+        except:
+            pass
+
+    def deleteAllRows(self, table:QTableWidget) -> None:
+        model:QAbstractTableModel = table.model()
+        model.removeRows(0, model.rowCount())
 
     def abrir_pdf(self):
         path, _ = QFileDialog.getOpenFileName(self, "Seleccione un Archivo", "", "pdf(*.pdf)")
